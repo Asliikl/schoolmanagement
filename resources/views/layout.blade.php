@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Management Project</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         #sidebar {
@@ -19,7 +20,6 @@
         #sidebar .nav-link:hover {
             background-color: #495057;
         }
-
     </style>
     @stack('css')
 
@@ -28,12 +28,14 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><h3>Student Management Project</h3></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <a class="navbar-brand" href="#">Course Management Project</a>
+        <div class="d-flex ms-auto">
+            @auth
+                <span class="navbar-text me-3">
+                    <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
+                </span>
+            @endauth
+        </div>
     </div>
 </nav>
 
@@ -41,29 +43,49 @@
     <div id="sidebar">
         <ul class="nav flex-column px-3">
             <li class="nav-item">
-                <a class="nav-link active" href="#home">Home</a>
+                <a class="nav-link active" href="{{ url('/') }}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/students')}}">Student</a>
+                <a class="nav-link" href="{{ url('/students') }}">Student</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/teachers')}}">Teacher</a>
+                <a class="nav-link" href="{{ url('/teachers') }}">Teacher</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/enrollments')}}">Enrollment</a>
+                <a class="nav-link" href="{{ url('/courses') }}">Courses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/payments')}}">Payment</a>
+                <a class="nav-link" href="{{ url('/batches') }}">Batches</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/enrollments') }}">Enrollment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/payments') }}">Payment</a>
+            </li>
+
+            @auth
+                <li class="nav-item" style="margin-top: 20px;">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm w-100">Logout</button>
+                    </form>
+                </li>
+            @endauth
+
+            @guest
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">Login</a>
+                </li>
+            @endguest
         </ul>
     </div>
 
     <div class="main-content col-md-8">
-       @yield('content')
+        @yield('content')
     </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

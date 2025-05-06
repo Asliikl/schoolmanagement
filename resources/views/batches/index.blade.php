@@ -11,7 +11,7 @@
 
         <div class="row mt-4">
             <div class="col-md-12">
-                <a href="{{ url('/students/create') }}" class="btn btn-success mb-3">
+                <a href="{{ url('/batches/create') }}" class="btn btn-success mb-3">
                     <i class="fa fa-plus-circle"></i> Add New
                 </a>
 
@@ -20,30 +20,30 @@
                         <thead class="table-primary">
                         <tr>
                             <th>#</th>
-                            <th>Student Name</th>
-                            <th>Address</th>
-                            <th>Phone</th>
+                            <th>Batch Name</th>
+                            <th>Course Name</th>
+                            <th>Start Date</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($students as $item => $student)
+                        @foreach ($batches as $item => $batch)
                             <tr>
                                 <td>{{ $item + 1 }}</td>
-                                <td>{{ $student->name }}</td>
-                                <td>{{ $student->address }}</td>
-                                <td>{{ $student->mobile }}</td>
+                                <td>{{ $batch->name }}</td>
+                                <td>{{ $batch->course->name ?? '-' }}</td>
+                                <td>{{ $batch->start_date }}</td>
                                 <td>
-                                    <a href="{{ route('students.show', $student->id) }}" class="btn btn-info btn-sm me-1" title="View student">
+                                    <a href="{{ route('batches.show', $batch->id) }}" class="btn btn-info btn-sm me-1" title="View student">
                                         View
                                     </a>
 
-                                    <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm me-1">
+                                    <a href="{{ route('batches.edit', $batch->id) }}" class="btn btn-warning btn-sm me-1">
                                         <i class="fa fa-pencil-square-o"></i> Edit
                                     </a>
 
 
-                                    <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('batches.destroy', $batch->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -59,4 +59,5 @@
             </div>
         </div>
     </div>
+
 @endsection

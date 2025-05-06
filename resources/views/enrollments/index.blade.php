@@ -11,7 +11,7 @@
 
         <div class="row mt-4">
             <div class="col-md-12">
-                <a href="{{ url('/students/create') }}" class="btn btn-success mb-3">
+                <a href="{{ url('/enrollments/create') }}" class="btn btn-success mb-3">
                     <i class="fa fa-plus-circle"></i> Add New
                 </a>
 
@@ -20,30 +20,35 @@
                         <thead class="table-primary">
                         <tr>
                             <th>#</th>
+                            <th>Enrollment No</th>
                             <th>Student Name</th>
-                            <th>Address</th>
-                            <th>Phone</th>
+                            <th>Batch Name</th>
+                            <th>Join Date</th>
+                            <th>Fee</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($students as $item => $student)
+                        @foreach ($enrollments as $item => $enrollment)
                             <tr>
                                 <td>{{ $item + 1 }}</td>
-                                <td>{{ $student->name }}</td>
-                                <td>{{ $student->address }}</td>
-                                <td>{{ $student->mobile }}</td>
+                                <td>{{ $enrollment->enroll_no }}</td>
+                                <td>{{ $enrollment->student->name ?? '-' }}</td>
+                                <td>{{ $enrollment->batch->name }}</td>
+                                <td>{{ $enrollment->join_date }}</td>
+                                <td>{{ $enrollment->fee }}</td>
+
                                 <td>
-                                    <a href="{{ route('students.show', $student->id) }}" class="btn btn-info btn-sm me-1" title="View student">
+                                    <a href="{{ route('enrollments.show', $enrollment->id) }}" class="btn btn-info btn-sm me-1" title="View student">
                                         View
                                     </a>
 
-                                    <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm me-1">
+                                    <a href="{{ route('enrollments.edit', $enrollment->id) }}" class="btn btn-warning btn-sm me-1">
                                         <i class="fa fa-pencil-square-o"></i> Edit
                                     </a>
 
 
-                                    <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('enrollments.destroy', $enrollment->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -59,4 +64,5 @@
             </div>
         </div>
     </div>
+
 @endsection
